@@ -1,0 +1,34 @@
+.content{
+	margin: 1.875rem;
+	border-bottom: #000000 solid 0.125rem;
+}
+.content img{
+	border-radius: 0.3125rem;
+	display: inline-block;
+	margin-bottom: 1.875rem;
+}
+.content .block_content{
+	display: inline-block;
+	margin-left: 6.25rem;
+	color: darkblue;
+}
+.content .block_content h4{
+	font-size: 2.5rem;
+}
+.comment{
+	margin: 3.125rem;
+}
+.comment button{
+	background-color: #008000;
+}
+.comment_content{
+	margin: 1.875rem;
+}
+.comment_content_child{
+	white-space: pre;
+	border-bottom: #428BCA solid 0.0625rem;
+}
+.comment_content_child .span_time{
+	color: #828284;
+	font-size: 0.9rem;
+}

@@ -1,0 +1,47 @@
+{{ extend './_layouts/home.html'}}
+
+{{ block 'title' }}{{ '多人博客 - 个人主页' }}{{ /block }}
+
+{{ block 'head' }}
+<link rel="stylesheet" href='./public/css/extra_index.css'>
+<link rel="stylesheet" href="../public/css/extra_profile.css"/>
+{{ /block }}
+
+
+{{ block 'body' }}
+<div class="head_class">
+	<p><span id="span1" onclick="span_first(this)">你发表的文章</span> <span id="span2" onclick="span_second(this)">你发表的评论</span></p>
+</div>
+<div class="content" id="content1">
+{{ each topics}}
+	<div class="child_content">
+		<img src={{ $value.avatar_topic }} style="width: 5.5rem; height: 8.25rem;">
+		<a class="block_content" href="/topic/show?id={{$value.id}}">
+			<h4 class="title_content">
+				<span class="classify_content">【{{ if $value.classify==='1' }}分享
+				{{ else if $value.classify==='2' }}问答
+				{{ else if $value.classify==='3' }}招聘
+				{{ else $value.classify==='4' }}客户端测试
+				{{ /if }}】</span>
+				{{ $value.title }}</h4>
+			<p class="content_content">{{ $value.content }}</p>
+			<span class="span_class">作者：{{ $value.nickname }}       浏览量：{{ $value.counter }}       评论：{{ $value.commentsCounter }}                  发表时间:  {{ $value.newTime }}</span>
+		</a>
+	</div>
+{{ /each }}
+</div>
+<div class="content" id="content2">
+	{{ each comments }}
+	<a href="/topic/show?id={{$value.topicId}}">
+		<div class="comment_child">
+			<p> {{ $value.commentContent }} </p>
+			<span class="span2"> ----{{ $value.newTime }} </span>
+		</div>
+	</a>
+	{{ /each }}
+</div>
+{{ /block }}
+
+{{ block 'script' }}
+<script src="../public/js/extra_profile.js"></script>
+{{ /block }}

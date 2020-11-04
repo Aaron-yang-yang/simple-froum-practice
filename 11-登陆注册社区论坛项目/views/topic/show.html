@@ -1,0 +1,46 @@
+{{extend '../_layouts/home.html'}}
+
+{{block 'title'}}{{'多人博客 - 话题'}}{{/block}}
+
+{{block 'head'}}
+<link rel="stylesheet" href='../../public/css/extra_show.css'>
+{{/block}}
+
+
+{{block 'body'}}
+<div class="content">
+	<img src={{ topic.avatar_topic }} style="width: 5.5rem; height: 8.25rem;">
+	<div class="block_content">
+		<h4 class="title_content">
+			<span class="classify_content">【{{ if topic.classify==='1' }}分享
+			{{ else if topic.classify==='2' }}问答
+			{{ else if topic.classify==='3' }}招聘
+			{{ else topic.classify==='4' }}客户端测试
+			{{ /if }}】</span>
+			{{ topic.title }}</h4>
+	</div>
+	<p class="content_content">{{ topic.content }}</p>
+	<span class="span_class">作者：{{ topic.nickname }}       浏览量：{{ topic.counter }}       评论：{{ comments.length }}</span>
+</div>
+
+{{ if comments }}
+<div class='comment_content'>
+	{{ each comments }}
+	<div class="comment_content_child"><span>{{ $value.nickname }}:</span><span>{{ $value.commentContent }}</span>             <span class="span_time">评论时间：{{ $value.newTime }}</span></div>
+	{{ /each }}
+</div>
+{{ /if }}
+
+<div class="comment">
+	<p>发表评论：</P>
+	<form action="/topic_comment" method="post">
+		<input name="email" value={{ user.email }} type='hidden'>
+		<input name="nickname" value={{ user.nickname }} type='hidden'>
+		<input name="topicId" value={{ topic.id }} type='hidden'>
+		<textarea class="form-control" rows="3" name="commentContent" required='true'></textarea>
+		<button type="submit" class="comment">评论</button>
+	</form>
+</div>
+
+<hr>
+{{/block}}

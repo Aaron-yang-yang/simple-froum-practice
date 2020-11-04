@@ -1,0 +1,144 @@
+{{extend '../_layouts/home.html'}}
+
+{{block 'title'}}{{'多人博客 - 首页'}}{{/block}}
+
+{{block 'body'}}
+<section class="container">
+  {{include '../_partials/settings-nav.html'}}
+  <div class="col-md-5">
+    <form id="profile_form">
+      <div class="form-group">
+        <label>账号</label>
+        <p class="form-control-static">{{ user.email }}</p>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">昵称</label>
+        <input class="form-control" id="exampleInputPassword1" name="nickname" value={{ user.nickname }}>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">介绍</label>
+        <textarea class="form-control" rows="3" name="bio">{{ user.bio }}</textarea>
+      </div>
+      <div class="form-group"> 
+        <label for="exampleInputPassword1">性别</label>
+        <div>
+          <label class="radio-inline">
+            <input type="radio" name="gender" value=-1 {{ (-1==user.gender) ? 'checked' : ''}}> 男
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="gender" value=0 {{ (0==user.gender) ? 'checked' : ''}}> 女
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="gender" value=1 {{ (1==user.gender) ? 'checked' : ''}}> 保密
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">生日</label>
+        <input class="form-control" id="exampleInputPassword1" name="birthday" value={{ user.newBirthday }}>
+      </div>
+      <button type="submit" class="btn btn-success">保存</button>
+    </form>
+  </div>
+  <div class="col-md-2 profile-avatar">
+    <dl>
+      <dt>头像设置</dt>
+        <img class="avatar" id="img" width="150" height="150" src={{ user.avatar }} alt="用户头像">
+        <div>
+					<form id="profile_avatar_form">
+						<input type="file" name="avatar" id="tu" accept="image/*"/>
+						<div style="margin-top:0.625rem;">
+							<button id="btn1" style="background-color: #0000FF;" type="button">Preview</button>
+							<button style="background-color: #008000;" type="submit">Upload</button>
+						</div>
+					</form>
+        </div>
+    </dl>
+  </div>
+</section>
+{{/block}}
+
+{{block 'script'}}
+<script>
+	
+	/**
+	 *  完成头像预览功能
+	 */
+	btn1.onclick=function(){
+	    //获取上传文件信息
+	    var fileobj = document.getElementById('tu').files[0]
+	    //加载读取文件函数
+	    var reader = new FileReader()
+	    //把文件读取成text文本
+	    // reader.readAsText(fileobj)
+
+	    //把文件地址读取出来
+	    reader.readAsDataURL(fileobj)
+	    
+	    //读取成二进制
+	    // reader.readAsArrayBuffer(fileobj)
+	    // reader.readAsBinaryString(fileobj)
+	    
+	    //读取完成(读取完成后才能console出信息)
+	    reader.onload = function(){
+	        //查看结果
+	        console.log('文本/路径/二进制/二进制字符串',reader.result)
+	        var imgurl = reader.result
+	        document.getElementById('img').src = imgurl
+	    }
+	}
+	
+	/**
+	 * 表单具有默认提交行为，默认行为是同步提交，同步提交时，浏览器会锁死（等待服务器响应结果）
+	 * 当结果响应回来后，无论服务器响应什么，浏览器都会去执行响应数据（即将响应结果覆盖当前页面）
+	 * 这种交互体验并不好
+	 * 所以后来发明了ajax异步请求方式，
+	 * 现在一般都使用异步请求提交表单
+	 */
+	
+	//信息保存
+	$('#profile_form').on('submit', function (e) {
+	  e.preventDefault()
+	  var formData = $(this).serialize()
+	  $.ajax({
+	    url: '/profile_post',
+	    type: 'post',
+	    data: formData,
+	    dataType: 'json',
+	    success: function (data) {
+	      var err_code = data.err_code
+	      if(err_code === 0) {
+	        window.alert('信息保存成功!')
+	      }else if(err_code === 500) {
+	        window.alert('服务器忙，请稍后重试！')
+	      }
+	    }
+	  })
+	})
+	
+	
+	// 头像保存
+	$('#profile_avatar_form').on('submit', function (a) {
+	  a.preventDefault()
+	  // var formData = $(this).serialize()
+		var formData = new FormData($('#profile_avatar_form')[0])
+  $.ajax({
+	    url: '/profile_avatar_form',
+	    type: 'post',
+	    data: formData,
+			async: false,
+			cache: false,
+			contentType: false, //不可缺参数
+			processData: false, //不可缺参数
+	    success: function (data) {
+	      var err_code = data.err_code
+	      if(err_code === 0) {
+	        window.alert('头像保存成功!')
+	      }else if(err_code === 500) {
+	        window.alert('服务器忙，请稍后重试！')
+	      }
+	    }
+	  })
+	})
+</script>
+{{/block}}

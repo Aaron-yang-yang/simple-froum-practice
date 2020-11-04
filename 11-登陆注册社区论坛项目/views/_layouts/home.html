@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{{block 'title'}}默认标题{{/block}}</title>
+  <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" href="../../public/css/extra_header.css">
+  {{block 'head'}}{{/block}}
+</head>
+
+<body>
+	<!-- 引入子模版 -->
+  {{include '../_partials/header.html'}}
+  {{block 'body'}}{{/block}}
+  {{include '../_partials/footer.html'}}
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="../../public/js/extra_header.js"></script>
+	<!-- 相当于一个插槽。名字为script -->
+  {{block 'script'}}{{/block}}
+</body>
+
+</html>

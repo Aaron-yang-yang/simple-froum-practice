@@ -1,0 +1,40 @@
+.content{
+	margin: 6.25rem 3.125rem;
+}
+#content2{
+	/* 让content2进此页面时不显示,通过js控制1和2的显示 */
+	display: none;
+}
+.content .child_content{
+	display: flex;
+	margin-top: 1.25rem;
+}
+.content .child_content img{
+	border-radius: 0.3125rem;
+}
+.content .child_content a{
+	color: black;
+	width: 80%;
+	font-size: 1rem;
+}
+.content .child_content a:hover{
+	text-decoration: none;
+	color: #428BCA;
+}
+.content .child_content span{
+	color: #A6D796;
+}
+.content .child_content .content_content{
+	text-overflow: ellipsis;
+	/* white-space: nowrap; */
+	overflow: hidden;
+	margin-left: 0.625rem;
+	line-height: 1.2rem;
+	height: 3.6rem;
+}
+.content .child_content .span_class{
+	color: #000000;
+	font-size: 0.875rem;
+	white-space: pre;
+	margin-left: 0.625rem;
+}

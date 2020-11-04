@@ -1,0 +1,34 @@
+<nav class="nav-all">
+	<div class="navbar-logo">
+		<a href="/">
+			<img src="/public/img/logo3.png" alt="logo">
+		</a>
+	</div>
+	<div class="nav-search">
+		<form class="nav-from">
+				<input type="text" class="form-input" placeholder="Search">
+		</form>
+	</div>
+	<ul class="nav-ul">
+			{{ if user }}
+				<div class="wrap" onmouseover="drop()" onmouseout="wrap()">
+					<div class="drop-down"></div>
+					<div class="drop-li" id="drop-id">
+						<li><a href="/profile">个人主页</a></li>
+						<li><a href="/settings/profile?id={{user.id}}">设置</a></li>
+						<li><a href="/logout">退出</a></li>
+					</div>
+				</div>
+				
+				<li class="current-user">
+					当前登录用户: {{ user.nickname }}
+				</li>
+				
+				<a class="class-express" href="/topics/new">发表</a>
+			{{ else }}
+				<a class="class-express" href="/login">发表</a>
+				<a class="class-login" href="/login">登录</a>
+				<a class="class-register" href="/register">注册</a>
+			{{ /if }}
+		</ul>
+</nav>
